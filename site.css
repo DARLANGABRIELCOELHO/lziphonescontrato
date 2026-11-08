@@ -1,0 +1,281 @@
+@font-face {
+  font-family: 'Arimo';
+  src: url('assets/fontes/arimo-400.woff2') format('woff2');
+  font-weight: 400;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Arimo';
+  src: url('assets/fontes/arimo-700.woff2') format('woff2');
+  font-weight: 700;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Figtree';
+  src: url('assets/fontes/figtree.woff2') format('woff2');
+  font-weight: 300 900;
+  font-display: swap;
+}
+
+:root {
+  --aluminio: #d3d7dc;
+  --aluminio-escuro: #b9bfc6;
+  --painel: #f6f7f8;
+  --grafite: #20252b;
+  --grafite-suave: #59626c;
+  --caneta: #1d3fbb;
+  --caneta-fundo: #e6ebfa;
+  --erro: #b3261e;
+  --linha: #8e97a1;
+}
+
+* { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--aluminio);
+  color: var(--grafite);
+  font-family: 'Figtree', 'Segoe UI', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: minmax(380px, 460px) 1fr;
+  height: 100vh;
+}
+
+/* Formulario */
+
+.painel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--painel);
+  overflow-y: auto;
+}
+
+.painel-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px 0;
+}
+.painel-topo img { display: block; mix-blend-mode: multiply; }
+
+.painel h1 {
+  margin: 20px 28px 0;
+  font-size: 27px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+form { flex: 1; padding: 0 28px 12px; }
+
+fieldset {
+  min-width: 0;
+  margin: 28px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+legend {
+  padding: 0;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 20px;
+}
+
+.campo { display: block; margin-top: 14px; min-width: 0; }
+.campo > span, .grupo-t {
+  display: block;
+  color: var(--grafite-suave);
+  font-size: 13px;
+}
+
+.campo input, .campo textarea {
+  display: block;
+  width: 100%;
+  padding: 5px 0 4px;
+  border: 0;
+  border-bottom: 1.5px solid var(--linha);
+  border-radius: 0;
+  background: transparent;
+  color: var(--caneta);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  outline: none;
+}
+.campo textarea { resize: vertical; line-height: 1.35; }
+.campo input:hover, .campo textarea:hover { border-bottom-color: var(--grafite); }
+.campo input:focus, .campo textarea:focus {
+  border-bottom-color: var(--caneta);
+  box-shadow: 0 1.5px 0 var(--caneta);
+}
+.campo.com-erro input { border-bottom-color: var(--erro); }
+
+.aviso { display: block; color: var(--erro); font-size: 13px; }
+.aviso:empty { display: none; }
+
+.nota { margin: 8px 0 0; color: var(--grafite-suave); font-size: 13px; }
+small.nota { display: block; margin-top: 5px; }
+
+.grupo { margin-top: 16px; }
+.opcoes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+
+.opcao { position: relative; cursor: pointer; }
+.opcao input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.opcao span {
+  display: block;
+  padding: 6px 11px;
+  border: 1.5px solid var(--linha);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.opcao:hover span { border-color: var(--grafite); }
+.opcao input:checked + span {
+  border-color: var(--caneta);
+  background: var(--caneta-fundo);
+  color: var(--caneta);
+}
+.opcao input:focus-visible + span { outline: 2px solid var(--caneta); outline-offset: 2px; }
+
+.total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 12px 0 0;
+  color: var(--grafite-suave);
+  font-size: 13px;
+}
+.total output { color: var(--caneta); font-size: 20px; font-weight: 700; }
+
+.acoes {
+  position: sticky;
+  bottom: 0;
+  padding: 12px 28px 16px;
+  border-top: 1px solid var(--aluminio-escuro);
+  background: var(--painel);
+}
+
+.pendencias { margin: 0 0 10px; font-size: 13px; color: var(--erro); }
+.pendencias.pronto { color: var(--grafite-suave); }
+
+.acoes-botoes { display: flex; align-items: center; gap: 16px; }
+
+.botao {
+  flex: 1;
+  min-height: 46px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--caneta);
+  color: #fff;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.botao:hover { background: #17329a; }
+.botao:focus-visible, .botao-texto:focus-visible {
+  outline: 2px solid var(--caneta);
+  outline-offset: 2px;
+}
+
+.botao-texto {
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--grafite-suave);
+  font: inherit;
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.botao-texto:hover { color: var(--grafite); }
+
+.ver-folha { display: none; }
+
+/* Mesa com a previa */
+
+.mesa {
+  min-width: 0;
+  overflow-y: auto;
+  padding: 18px 32px 40px;
+}
+
+.mesa-nota {
+  margin: 0 auto 14px;
+  max-width: 794px;
+  color: var(--grafite);
+  font-size: 14px;
+}
+
+#documento { max-width: 794px; margin: 0 auto; }
+
+.folha {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(32, 37, 43, 0.35), 0 14px 30px -14px rgba(32, 37, 43, 0.5);
+}
+.folha + .folha { margin-top: 24px; }
+.folha text {
+  fill: #000;
+  font-family: 'Arimo', Arial, sans-serif;
+  font-kerning: none;
+  font-variant-ligatures: none;
+  white-space: pre;
+}
+.folha .b { font-weight: 700; }
+.folha .v { fill: var(--caneta); }
+
+@media (max-width: 900px) {
+  html, body { height: auto; }
+  .app { display: block; height: auto; }
+  .painel { overflow: visible; }
+  .painel-topo, .acoes { padding-left: 16px; padding-right: 16px; }
+  .painel h1 { margin-left: 16px; margin-right: 16px; }
+  form { padding-left: 16px; padding-right: 16px; }
+  .ver-folha { display: block; }
+  .mesa { overflow: visible; padding: 18px 16px 32px; }
+}
+
+@media (max-width: 420px) {
+  .grade { grid-template-columns: 1fr; }
+}
+
+/* Se alguem usar o imprimir do navegador: so as folhas, sem o azul */
+
+@page { size: A4; margin: 0; }
+
+@media print {
+  html, body { height: auto; background: #fff; }
+  .painel, .mesa-nota { display: none; }
+  .app, .mesa { display: block; height: auto; padding: 0; overflow: visible; }
+  #documento { max-width: none; }
+  .folha { box-shadow: none; break-after: page; }
+  .folha + .folha { margin-top: 0; }
+  .folha:last-child { break-after: auto; }
+  .folha .v { fill: #000; }
+}

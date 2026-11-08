@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Novo contrato de venda | LZ iPhones</title>
+  <link rel="icon" href="assets/logo.jpg">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <div class="app">
+    <main class="painel">
+      <header class="painel-topo">
+        <img src="assets/logo.jpg" alt="LZ iPhones" width="120" height="42">
+        <button type="button" class="botao-texto" id="novo">Limpar para nova venda</button>
+      </header>
+
+      <h1>Novo contrato de venda</h1>
+
+      <form id="form" autocomplete="off" novalidate>
+        <fieldset>
+          <legend>Cliente</legend>
+          <label class="campo">
+            <span>Nome completo</span>
+            <input id="nome" required>
+          </label>
+          <div class="grade">
+            <label class="campo">
+              <span>CPF</span>
+              <input id="cpf" inputmode="numeric" maxlength="14" required aria-describedby="cpf-aviso">
+              <small class="aviso" id="cpf-aviso"></small>
+            </label>
+            <label class="campo">
+              <span>Celular</span>
+              <input id="celular" inputmode="tel" maxlength="15">
+            </label>
+          </div>
+          <label class="campo">
+            <span>Endereço</span>
+            <input id="endereco">
+          </label>
+          <div class="grade">
+            <label class="campo">
+              <span>Cidade</span>
+              <input id="cidade">
+            </label>
+            <label class="campo">
+              <span>E-mail</span>
+              <input id="email" type="email" inputmode="email">
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Aparelho</legend>
+          <div class="grade">
+            <label class="campo">
+              <span>Modelo</span>
+              <input id="modelo" required>
+            </label>
+            <label class="campo">
+              <span>Saúde da bateria (%)</span>
+              <input id="bateria" inputmode="numeric" maxlength="3" required aria-describedby="bateria-aviso">
+              <small class="aviso" id="bateria-aviso"></small>
+            </label>
+          </div>
+          <div class="grade">
+            <label class="campo">
+              <span>IMEI 1</span>
+              <input id="imei1" inputmode="numeric" maxlength="18" required aria-describedby="imei1-aviso">
+              <small class="aviso" id="imei1-aviso"></small>
+            </label>
+            <label class="campo">
+              <span>IMEI 2</span>
+              <input id="imei2" inputmode="numeric" maxlength="18" aria-describedby="imei2-aviso">
+              <small class="aviso" id="imei2-aviso"></small>
+            </label>
+          </div>
+          <label class="campo">
+            <span>Número de série</span>
+            <input id="serie">
+          </label>
+
+          <div class="grupo" role="radiogroup" aria-labelledby="condicao-t">
+            <span class="grupo-t" id="condicao-t">Condição do aparelho</span>
+            <div class="opcoes">
+              <label class="opcao"><input type="radio" name="condicao" value="" checked><span>Marcar à caneta</span></label>
+              <label class="opcao"><input type="radio" name="condicao" value="novo"><span>Novo</span></label>
+              <label class="opcao"><input type="radio" name="condicao" value="seminovo"><span>Seminovo/usado</span></label>
+            </div>
+          </div>
+
+          <div class="grupo" role="group" aria-labelledby="acessorios-t">
+            <span class="grupo-t" id="acessorios-t">Acessórios entregues</span>
+            <div class="opcoes">
+              <label class="opcao"><input type="checkbox" name="acessorio" value="fonte"><span>Fonte</span></label>
+              <label class="opcao"><input type="checkbox" name="acessorio" value="cabo"><span>Cabo</span></label>
+              <label class="opcao"><input type="checkbox" name="acessorio" value="capinha"><span>Capinha</span></label>
+              <label class="opcao"><input type="checkbox" name="acessorio" value="película"><span>Película</span></label>
+            </div>
+          </div>
+          <label class="campo">
+            <span>Outros acessórios (opcional)</span>
+            <input id="outros">
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Pagamento</legend>
+          <div class="grade">
+            <label class="campo">
+              <span>Preço (R$)</span>
+              <input id="preco" class="moeda" inputmode="numeric" required>
+            </label>
+            <label class="campo">
+              <span>Desconto (R$)</span>
+              <input id="desconto" class="moeda" inputmode="numeric" aria-describedby="desconto-aviso">
+              <small class="aviso" id="desconto-aviso"></small>
+            </label>
+          </div>
+          <p class="total">Total a pagar <output id="total">R$ 0,00</output></p>
+
+          <div class="grupo" role="group" aria-labelledby="forma-t">
+            <span class="grupo-t" id="forma-t">Forma de pagamento</span>
+            <div class="opcoes">
+              <label class="opcao"><input type="checkbox" name="forma" value="cartao"><span>Cartão</span></label>
+              <label class="opcao"><input type="checkbox" name="forma" value="pix"><span>Pix</span></label>
+              <label class="opcao"><input type="checkbox" name="forma" value="dinheiro"><span>Dinheiro</span></label>
+              <label class="opcao"><input type="checkbox" name="forma" value="transferencia"><span>Transferência</span></label>
+              <label class="opcao"><input type="checkbox" name="forma" value="troca"><span>Aparelho na troca</span></label>
+            </div>
+          </div>
+          <label class="campo">
+            <span>Parcelas ou detalhes (opcional)</span>
+            <input id="detalhe">
+          </label>
+          <label class="campo" id="troca-campo" hidden>
+            <span>Aparelho recebido na troca e valor abatido</span>
+            <textarea id="troca" rows="3" maxlength="500"></textarea>
+          </label>
+          <div class="grade">
+            <label class="campo">
+              <span>Data da venda</span>
+              <input id="data" type="date" required>
+            </label>
+            <label class="campo">
+              <span>Data de recebimento</span>
+              <input id="recebimento" type="date" required>
+            </label>
+          </div>
+          <p class="nota" id="garantia"></p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Loja</legend>
+          <label class="campo">
+            <span>CNPJ ou CPF da loja (opcional)</span>
+            <input id="cnpj" inputmode="numeric" maxlength="18" aria-describedby="cnpj-nota">
+            <small class="nota" id="cnpj-nota">Sem preencher, a linha sai em branco no contrato. Fica salvo neste navegador.</small>
+          </label>
+        </fieldset>
+      </form>
+
+      <footer class="acoes">
+        <p class="pendencias" id="pendencias" role="status"></p>
+        <div class="acoes-botoes">
+          <a class="botao-texto ver-folha" href="#mesa">Ver contrato</a>
+          <button type="button" class="botao" id="gerar">Gerar PDF</button>
+        </div>
+      </footer>
+    </main>
+
+    <section class="mesa" id="mesa" aria-label="Prévia do contrato">
+      <p class="mesa-nota">O que você digita aparece em azul só aqui. No PDF, sai tudo em preto.</p>
+      <div id="documento"></div>
+    </section>
+  </div>
+
+  <script src="metricas.js"></script>
+  <script src="contrato.js"></script>
+  <script src="pdf.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
