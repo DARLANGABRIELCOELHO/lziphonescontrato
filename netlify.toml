@@ -1,0 +1,14 @@
+[build]
+  publish = "."
+
+# Bibliotecas e recursos do PDF mudam raramente: o navegador guarda por 30 dias
+# e não baixa de novo a cada visita (economiza banda do plano).
+[[headers]]
+  for = "/vendor/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"

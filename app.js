@@ -6,6 +6,11 @@
   const form = $('form');
   const documento = $('documento');
   const CHAVE_CNPJ = 'lz-contratos-cnpj';
+  /* Assinaturas na tela: o traço vai para o PDF e para o registro salvo. */
+  const pads = {
+    cliente: Assinatura.iniciar('assinatura-cliente', () => atualizar()),
+    loja: Assinatura.iniciar('assinatura-loja', () => atualizar()),
+  };
 
   const FORMAS = {
     cartao: { rotulo: 'Cartão', frase: 'com cartão' },
@@ -164,6 +169,8 @@
       temTroca,
       preco,
       desconto,
+      assinaturaCliente: pads.cliente.dataUrl(),
+      assinaturaLoja: pads.loja.dataUrl(),
       arquivo: nomeArquivo(texto('nome'), $('data').value),
     };
   }
@@ -241,6 +248,9 @@
     if (op.tipo === 'contorno') {
       return `<rect x="${n(op.x)}" y="${n(op.y)}" width="${n(op.largura)}" height="${n(op.altura)}" fill="none" stroke="#000" stroke-width="${op.espessura}"/>`;
     }
+    if (op.tipo === 'assinatura') {
+      return `<image href="${op.dados}" x="${n(op.x)}" y="${n(op.y)}" width="${n(op.largura)}" height="${n(op.altura)}" preserveAspectRatio="xMidYMid meet"/>`;
+    }
     return `<image href="assets/logo.jpg" x="${n(op.x)}" y="${n(op.y)}" width="${n(op.largura)}" height="${n(op.altura)}"/>`;
   }
 
@@ -296,12 +306,16 @@
     }
 
     const botao = $('gerar');
-    const arquivo = lerDados().arquivo;
+    const dados = lerDados();
+    const arquivo = dados.arquivo;
     botao.disabled = true;
+    botao.textContent = 'Salvando...';
+    const salvo = await Registros.enviar('contrato', dados);
     botao.textContent = 'Gerando PDF...';
     try {
       PdfContrato.baixar(await PdfContrato.montar(contrato, arquivo), arquivo);
-      $('pendencias').textContent = `PDF gerado: ${arquivo}.pdf`;
+      $('pendencias').textContent = `PDF gerado: ${arquivo}.pdf. ` +
+        (salvo ? 'Contrato salvo.' : 'Sem conexão: o contrato será salvo quando a internet voltar.');
     } catch (erro) {
       $('pendencias').classList.remove('pronto');
       $('pendencias').textContent = 'O PDF não foi gerado. Recarregue a página e tente de novo.';
@@ -314,6 +328,8 @@
   function limpar() {
     const cnpj = $('cnpj').value;
     form.reset();
+    pads.cliente.limpar();
+    pads.loja.limpar();
     $('cnpj').value = cnpj;
     $('data').value = hojeIso();
     $('recebimento').value = hojeIso();
@@ -364,6 +380,7 @@
   $('data').value = hojeIso();
   $('recebimento').value = hojeIso();
   atualizar();
-  /* Adianta o carregamento para o botao responder na hora; se falhar, tenta de novo ao gerar. */
-  PdfContrato.preparar().catch(() => {});
+  /* As bibliotecas do PDF só são baixadas quando o botão Gerar PDF é usado. */
+  /* Envia de novo o que ficou sem conexão em outra vez. */
+  Registros.reenviarPendentes();
 })();

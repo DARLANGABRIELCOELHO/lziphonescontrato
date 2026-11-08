@@ -79,8 +79,39 @@
           width: op.largura,
           height: op.altura,
         });
+      } else if (op.tipo === 'assinatura') {
+        const imagem = recursos.assinaturas.get(op.dados);
+        if (imagem) {
+          const medida = imagem.scaleToFit(op.largura, op.altura);
+          pagina.drawImage(imagem, {
+            x: op.x + (op.largura - medida.width) / 2,
+            y: y(op.y + op.altura) + (op.altura - medida.height) / 2,
+            width: medida.width,
+            height: medida.height,
+          });
+        }
       }
     }
+  }
+
+  function dataUrlParaBytes(url) {
+    return base64ParaBytes(url.slice(url.indexOf(',') + 1));
+  }
+
+  /* Incorpora cada assinatura uma vez. Imagem inválida deixa a linha em branco, sem travar o PDF. */
+  async function embutirAssinaturas(pdf, documento) {
+    const mapa = new Map();
+    for (const folha of documento.folhas) {
+      for (const op of folha.ops) {
+        if (op.tipo !== 'assinatura' || mapa.has(op.dados)) continue;
+        try {
+          mapa.set(op.dados, await pdf.embedPng(dataUrlParaBytes(op.dados)));
+        } catch (erro) {
+          /* Sem imagem: a linha sai em branco para assinar à caneta. */
+        }
+      }
+    }
+    return mapa;
   }
 
   async function montar(contrato, titulo) {
@@ -101,6 +132,7 @@
       logo: await pdf.embedJpg(base64ParaBytes(dados.logo)),
     };
 
+    recursos.assinaturas = await embutirAssinaturas(pdf, contrato);
     contrato.folhas.forEach((folha) => desenharFolha(pdf, folha, recursos));
     return pdf.save();
   }

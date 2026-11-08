@@ -330,6 +330,9 @@
     const linha = y + 55.15;
     traco(ops, 77.4, linha, 236.55, linha, 0.75);
     traco(ops, 257.4, linha, 516.55, linha, 0.75);
+    if (d.assinaturaCliente) {
+      ops.push({ tipo: 'assinatura', x: 261.4, y: linha - 36, largura: 251.15, altura: 33, dados: d.assinaturaCliente });
+    }
     if (d.recebimentoTexto) escrever(ops, [V(d.recebimentoTexto)], { centro: 157 }, y + 52.65, 10);
     escrever(ops, [T('Data de Recebimento')], { centro: 157 }, y + 64, 8);
     escrever(ops, [T('Assinatura do Comprador')], { centro: 387 }, y + 64, 8);
@@ -456,6 +459,13 @@
     const linha = y + 33.375;
     traco(ops, cliente.esquerda, linha, cliente.esquerda + LARGURA_ASSINATURA, linha, 0.75);
     traco(ops, loja.esquerda, linha, loja.esquerda + LARGURA_ASSINATURA, linha, 0.75);
+    /* Assinaturas na tela: a imagem fica logo acima da linha, sem tocar no texto de cima. */
+    if (d.assinaturaCliente) {
+      ops.push({ tipo: 'assinatura', x: cliente.esquerda + 4, y: y + 6, largura: LARGURA_ASSINATURA - 8, altura: 26, dados: d.assinaturaCliente });
+    }
+    if (d.assinaturaLoja) {
+      ops.push({ tipo: 'assinatura', x: loja.esquerda + 4, y: y + 6, largura: LARGURA_ASSINATURA - 8, altura: 26, dados: d.assinaturaLoja });
+    }
 
     let nome = y + 45;
     for (const parte of bloco.assinaturas) {

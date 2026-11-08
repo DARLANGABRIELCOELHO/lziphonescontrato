@@ -159,6 +159,21 @@
             <small class="nota" id="cnpj-nota">Sem preencher, a linha sai em branco no contrato. Fica salvo neste navegador.</small>
           </label>
         </fieldset>
+
+        <fieldset>
+          <legend>Assinaturas</legend>
+          <div class="campo">
+            <span>Assinatura do comprador (opcional)</span>
+            <canvas id="assinatura-cliente" class="assinatura" aria-label="Assinatura do comprador"></canvas>
+            <button type="button" class="botao-texto" data-limpar="assinatura-cliente">Limpar</button>
+          </div>
+          <div class="campo">
+            <span>Assinatura da loja (opcional)</span>
+            <canvas id="assinatura-loja" class="assinatura" aria-label="Assinatura da loja"></canvas>
+            <button type="button" class="botao-texto" data-limpar="assinatura-loja">Limpar</button>
+          </div>
+          <p class="nota">Sem assinar na tela, as linhas saem em branco para assinar à caneta depois de imprimir.</p>
+        </fieldset>
       </form>
 
       <footer class="acoes">
@@ -179,6 +194,8 @@
   <script src="metricas.js"></script>
   <script src="contrato.js"></script>
   <script src="pdf.js"></script>
+  <script src="registros.js"></script>
+  <script src="assinatura.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
